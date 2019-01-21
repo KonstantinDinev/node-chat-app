@@ -21,11 +21,11 @@ io.on('connection', (socket) => {
 	// socket.broadcast.emit from Admin text New user joined
 	socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-	socket.on('createMessage', (message) => {
+	socket.on('createMessage', (message, callback) => {
 		console.log('createMessage', message);
 
-		io.emit('newMessage', generateMessage(message.from, message.text))
-
+		io.emit('newMessage', generateMessage(message.from, message.text));
+		if(typeof callback === 'function') callback('This is from the server');
 		// socket.broadcast.emit('newMessage', {
 		// 	from: message.from,
 		// 	text: message.text,
@@ -42,22 +42,3 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
 	console.log(`Server is up on port ${port}`);
 });
-
-
-
-	// socket.emit('newMessage', {
-	// 	from: 'John',
-	// 	text: 'See you then', 
-	// 	createdAt: 123123
-	// });
-
-
-		// socket.emit('newEmail', {
-	// 	from: 'konst@cyrillus.com',
-	// 	text: 'Hey, this is a test chat app.',
-	// 	createdAt: 123
-	// });
-
-	// socket.on('createEmail', (newEmail) => {
-	// 	console.log('createEmail', newEmail);
-	// });
